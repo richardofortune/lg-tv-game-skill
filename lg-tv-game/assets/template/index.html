@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>{{TITLE}}</title>
+<style>
+@font-face { font-family: "Baloo"; src: url("fonts/Baloo.ttf") format("truetype"); font-weight: 400 800; }
+</style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="stage">
+  <canvas id="game" width="1920" height="1080"></canvas>
+
+  <div id="hud" hidden>
+    <div class="scores" id="scores"></div>
+    <div class="timer" id="timer">60</div>
+  </div>
+
+  <section class="screen" id="title">
+    <h1 class="logo">{{TITLE}}</h1>
+    <p class="lede">Catch the fireflies. Dodge the moths. Fill your jar before the night ends.</p>
+    <div class="players" id="joins"></div>
+    <div class="menu">
+      <button class="btn primary focusable" data-act="play">Play</button>
+      <button class="btn focusable" data-act="sound" id="soundBtn">Sound on</button>
+      <button class="btn focusable quit" data-act="quit">Quit</button>
+    </div>
+    <p class="hint">Extra players: press <b>A</b> on a gamepad to join</p>
+  </section>
+
+  <section class="screen dim" id="pause" hidden>
+    <div class="panel">
+      <h2>Paused</h2>
+      <p>Arrows or stick to move. Point the Magic Remote to steer.</p>
+      <div class="menu">
+        <button class="btn primary focusable" data-act="resume">Keep playing</button>
+        <button class="btn focusable" data-act="restart">Start again</button>
+        <button class="btn focusable" data-act="menu">Main menu</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen dim" id="over" hidden>
+    <div class="panel">
+      <h2 id="overTitle">Night's over</h2>
+      <p id="overSub"></p>
+      <div class="results" id="results"></div>
+      <div class="menu row">
+        <button class="btn primary focusable" data-act="restart">Play again</button>
+        <button class="btn focusable" data-act="menu">Main menu</button>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="kit.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

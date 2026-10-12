@@ -1,0 +1,83 @@
+/* Design tokens. Change these first when re-theming a game. */
+:root {
+  --bg: #0B1530;
+  --ink: #FFF4DE;
+  --muted: #B9C2E6;
+  --accent: #FFD25E;
+  --accent-ink: #3A2600;
+  --panel: rgba(16, 22, 52, .86);
+  --focus: #FFE27A;
+  --p1: #FF8A5B; --p2: #5BD1FF; --p3: #B78CFF; --p4: #7BE08A;
+  --safe: 64px;            /* keep text and controls inside this margin */
+  --font: "Baloo", "LG Smart UI", "Arial Rounded MT Bold", Arial, sans-serif;
+}
+html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); }
+* { box-sizing: border-box; }
+button { font: inherit; color: inherit; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+
+#stage { font-family: var(--font); color: var(--ink); overflow: hidden; }
+#game { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* Screens are DOM layers over the canvas: crisp text, real focus, easy to theme. */
+.screen {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center; padding: var(--safe);
+}
+.screen[hidden] { display: none; }
+.screen.dim { background: rgba(5, 8, 24, .62); }
+.logo { margin: 0; font-size: 168px; line-height: .9; font-weight: 800; letter-spacing: -.01em; text-shadow: 0 8px 0 rgba(0, 0, 0, .35), 0 0 60px rgba(255, 210, 94, .35); }
+.lede { margin: 18px 0 44px; font-size: 38px; color: var(--muted); font-weight: 500; }
+.panel { background: var(--panel); border-radius: 36px; padding: 56px 72px; min-width: 760px; box-shadow: 0 20px 60px rgba(0, 0, 0, .45); }
+.panel h2 { margin: 0 0 12px; font-size: 76px; line-height: 1; }
+.panel p { margin: 0 0 36px; font-size: 34px; color: var(--muted); }
+.menu { display: flex; flex-direction: column; gap: 18px; align-items: stretch; }
+.menu.row { flex-direction: row; justify-content: center; }
+
+.btn {
+  min-width: 360px; height: 96px; padding: 6px 48px 0; border-radius: 48px;
+  background: rgba(255, 255, 255, .12); font-size: 40px; font-weight: 700;
+  transition: transform .1s, background-color .15s;
+}
+.btn.primary { background: var(--accent); color: var(--accent-ink); box-shadow: 0 6px 0 rgba(0, 0, 0, .3); }
+/* Focus must be visible from 3 metres away: thick ring, scale, colour. */
+.focusable:focus { outline: 6px solid var(--focus); outline-offset: 6px; transform: scale(1.05); }
+.touch .focusable:focus { outline: none; transform: none; }
+
+.players { display: flex; gap: 24px; justify-content: center; margin-bottom: 44px; }
+.chip { display: flex; align-items: center; gap: 14px; padding: 14px 28px 10px; border-radius: 40px; background: rgba(255, 255, 255, .08); font-size: 30px; font-weight: 700; color: var(--muted); }
+.chip i { width: 26px; height: 26px; border-radius: 50%; background: currentColor; opacity: .35; }
+.chip.on { color: var(--ink); background: rgba(255, 255, 255, .16); }
+.chip.on i { opacity: 1; }
+.chip.p1 i { color: var(--p1); } .chip.p2 i { color: var(--p2); } .chip.p3 i { color: var(--p3); } .chip.p4 i { color: var(--p4); }
+.hint { font-size: 28px; color: var(--muted); margin-top: 40px; }
+.hint b { color: var(--ink); }
+
+/* HUD */
+#hud { position: absolute; left: var(--safe); right: var(--safe); top: 40px; display: flex; justify-content: space-between; align-items: flex-start; pointer-events: none; }
+#hud[hidden] { display: none; }
+.scores { display: flex; gap: 22px; }
+.score { min-width: 170px; padding: 12px 26px 8px; border-radius: 28px; background: rgba(5, 8, 24, .5); font-size: 50px; font-weight: 800; display: flex; align-items: center; gap: 14px; }
+.score i { width: 24px; height: 24px; border-radius: 50%; }
+.score small { font-size: 26px; color: var(--accent); font-weight: 700; }
+.timer { font-size: 64px; font-weight: 800; padding: 6px 30px 0; border-radius: 28px; background: rgba(5, 8, 24, .5); min-width: 150px; text-align: center; }
+.timer.low { color: #FF7A6B; }
+
+.results { display: flex; gap: 28px; justify-content: center; margin: 10px 0 44px; }
+.result { padding: 22px 34px 16px; border-radius: 28px; background: rgba(255, 255, 255, .08); min-width: 200px; }
+.result b { display: block; font-size: 72px; line-height: 1; }
+.result span { font-size: 26px; color: var(--muted); }
+.result.win { background: rgba(255, 210, 94, .2); box-shadow: inset 0 0 0 4px var(--accent); }
+
+.tv-toast {
+  position: absolute; left: 50%; top: 150px; transform: translateX(-50%);
+  padding: 16px 40px 12px; border-radius: 40px; background: var(--ink); color: var(--bg);
+  font-size: 36px; font-weight: 800; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 20;
+}
+.tv-toast.show { opacity: 1; }
+
+.web .tv-only { display: none; }
+.web .quit { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn, .focusable:focus { transition: none; transform: none; }
+}

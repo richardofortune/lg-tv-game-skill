@@ -1,0 +1,45 @@
+name: Build and test
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install tools
+        run: |
+          pip install pillow
+          npm install -g @webos-tools/cli
+      - name: Scaffold and check a sample game
+        run: |
+          python lg-tv-game/scripts/new_game.py --title "CI Game" --out /tmp/ci-game --id com.example.cigame
+          python lg-tv-game/scripts/check_game.py /tmp/ci-game
+          python lg-tv-game/scripts/inline.py /tmp/ci-game /tmp/ci-game.html
+          bash lg-tv-game/scripts/package.sh /tmp/ci-game dist
+      - name: Build skill
+        run: bash build.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lg-tv-game
+          path: |
+            dist/lg-tv-game.skill
+            dist/*.ipk
+      - name: Attach to release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/lg-tv-game.skill
