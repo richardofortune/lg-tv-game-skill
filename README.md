@@ -21,7 +21,7 @@ The `references/` folder holds the guidance Claude follows: look and feel for th
 
 ## Install the skill
 
-Download `lg-tv-game.skill` from the [latest release](../../releases/latest), or build it yourself with `bash build.sh`. In Claude, open Settings, then Capabilities, and upload the file under Skills. Skills need code execution enabled.
+Download `lg-tv-game.skill` from the [latest release](../../releases/latest), or build it yourself with `bash build.sh`, then upload it to Claude as a custom skill from Settings. Claude's help centre has the current steps.
 
 ## Use the tools without Claude
 
